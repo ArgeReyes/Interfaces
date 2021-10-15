@@ -1,18 +1,25 @@
 package proyecto;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import javax.swing.JFileChooser;
 
 /**
  *
  * @author ARGENTINA REYES
  */
-public class main extends javax.swing.JFrame {
 
+public class main extends javax.swing.JFrame {
+    
     /**
      * Creates new form main
      */
     public main() {
         initComponents();
+        
+        
     }
-
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -22,6 +29,7 @@ public class main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
+        jTextField1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -29,6 +37,13 @@ public class main extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, 290, 30));
 
         jLabel3.setFont(new java.awt.Font("Bookman Old Style", 3, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -58,7 +73,45 @@ public class main extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
+        
+        JFileChooser  sel = new JFileChooser();
+         int select = sel.showSaveDialog(this);
+         int textf = sel.showOpenDialog(this);
+         
+         File txt = sel.getSelectedFile();
+         
+         this.jTextField1.setText(txt.getAbsolutePath());
+         
+         if (select == JFileChooser.APPROVE_OPTION)
+        {
+            File ruta = sel.getSelectedFile();
+            System.out.println(ruta);
+            Proyecto.Hayruta=true;
+            try {
+            String archivo = "/ruta/rutapdf.txt";
+            String contenido = ruta.getAbsolutePath();
+            File file = new File(archivo);
+            // Si el archivo no existe es creado
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(contenido);
+            bw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        }
+        
+         
     }                                        
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        // Textfile donde aparece la ruta
+        
+        
+    }                                           
 
     /**
      * @param args the command line arguments
@@ -100,5 +153,6 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration                   
 }
